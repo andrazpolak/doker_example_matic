@@ -30,6 +30,20 @@ services:
         max-file: "5" # number of files or file count
         max-size: "10m" # file size
 
+  httpd:
+    image: httpd:latest
+    restart: unless-stopped
+    ports:
+      - 3002:80
+    volumes:
+      - ./static_web_page:/usr/local/apache2/htdocs
+      # - ./httpd.conf:/usr/local/apache2/conf/httpd.conf
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5" # number of files or file count
+        max-size: "10m" # file size
+
 volumes:
   volume_emoncms:
     driver: local
