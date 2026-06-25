@@ -1,0 +1,37 @@
+services:
+  emoncms:
+    restart: unless-stopped
+    image: alexjunk/emoncms
+    ports:
+      - 7443:443
+      - 8081:80
+      - 9883:1883
+    environment:
+      - TZ=Europe/Paris
+      - REDIS_BUFFER=1
+      - EMONCMS_LOG_LEVEL=2
+      - MYSQL_DATABASE=emoncms
+      - MYSQL_USER=emoncms
+      - MYSQL_PASSWORD=emonpiemoncmsmysql2016
+      - MQTT_USER=emonpi
+      - MQTT_PASSWORD=emonpimqtt2016
+      - MQTT_HOST=localhost
+      - MQTT_BASETOPIC=emon
+      - MQTT_CLIENT_ID=emoncms
+      - MQTT_LOG_LEVEL=error
+      - CRT_FILE=/etc/ssl/apache2/server.pem
+      - KEY_FILE=/etc/ssl/apache2/server.key
+      - CNAME=localhost
+      - CUSTOM_APACHE_CONF=0
+      - USE_HOSTNAME_FOR_MQTT_TOPIC_CLIENTID=0
+    volumes:
+      - volume_emoncms:/var/lib/mysql
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5" # number of files or file count
+        max-size: "10m" # file size
+
+volumes:
+  volume_emoncms:
+    driver: local
