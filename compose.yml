@@ -11,10 +11,6 @@ services:
       - REDIS_BUFFER=1
       - EMONCMS_LOG_LEVEL=2
       - MYSQL_DATABASE=emoncms
-      - MYSQL_USER=emoncms
-      - MYSQL_PASSWORD=emonpiemoncmsmysql2016
-      - MQTT_USER=emonpi
-      - MQTT_PASSWORD=emonpimqtt2016
       - MQTT_HOST=localhost
       - MQTT_BASETOPIC=emon
       - MQTT_CLIENT_ID=emoncms
@@ -24,6 +20,8 @@ services:
       - CNAME=localhost
       - CUSTOM_APACHE_CONF=0
       - USE_HOSTNAME_FOR_MQTT_TOPIC_CLIENTID=0
+    env_file:
+      - ./.env
     volumes:
       - volume_emoncms:/var/lib/mysql
     logging:
